@@ -52,9 +52,29 @@ public class Chessman : MonoBehaviour
         y *= 0.66f;
 
         x += -2.3f;
-        x += -2.3f;
+        y += -2.3f;
 
         this.transform.position = new Vector3(x, y, -1.0f);
+    }
+
+    public int GetXBoard()
+    {
+        return xBoard;
+    }
+
+    public int GetYboard()
+    {
+        return yBoard;
+    }
+
+    public void SetXBoard(int x)
+    {
+        xBoard = x;
+    }
+
+    public void SetYBoard(int y)
+    {
+        yBoard = y;
     }
 
 }
