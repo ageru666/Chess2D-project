@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * @class Chessman
+ * @brief Represents a chess piece in the game.
+ */
 public class Chessman : MonoBehaviour
 {
     //references
@@ -18,6 +22,9 @@ public class Chessman : MonoBehaviour
     public Sprite black_queen, black_knight, black_bishop, black_king, black_rook, black_pawn;
     public Sprite white_queen, white_knight, white_bishop, white_king, white_rook, white_pawn;
 
+    /// <summary>
+    /// Activates the chess piece and sets its initial position and sprite based on its name.
+    /// </summary>
     public void Activate()
     {
         controller = GameObject.FindGameObjectWithTag("GameController");
@@ -43,6 +50,9 @@ public class Chessman : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets the visual coordinates of the chess piece based on its board coordinates.
+    /// </summary>
     public void SetCoords()
     {
         float x = xBoard;
@@ -57,26 +67,46 @@ public class Chessman : MonoBehaviour
         this.transform.position = new Vector3(x, y, -1.0f);
     }
 
+    /// <summary>
+    /// Retrieves the current x-coordinate of the chess piece on the board.
+    /// </summary>
+    /// <returns>The x-coordinate of the chess piece on the board.</returns>
     public int GetXBoard()
     {
         return xBoard;
     }
 
+    /// <summary>
+    /// Retrieves the current y-coordinate of the chess piece on the board.
+    /// </summary>
+    /// <returns>The y-coordinate of the chess piece on the board.</returns>
     public int GetYBoard()
     {
         return yBoard;
     }
 
+    /// <summary>
+    /// Sets the x-coordinate of the chess piece on the board.
+    /// </summary>
+    /// <param name="x">The new x-coordinate of the chess piece.</param>
     public void SetXBoard(int x)
     {
         xBoard = x;
     }
 
+    /// <summary>
+    /// Sets the y-coordinate of the chess piece on the board.
+    /// </summary>
+    /// <param name="y">The new y-coordinate of the chess piece.</param>
     public void SetYBoard(int y)
     {
         yBoard = y;
     }
 
+    /// <summary>
+    /// Triggered when the mouse button is released over the chess piece.
+    /// Destroys existing move plates and initiates the creation of new move plates.
+    /// </summary>
     private void OnMouseUp()
     {
         if (!controller.GetComponent<Game>().IsGameOver() && controller.GetComponent<Game>().GetCurrentPlayer() == player)
@@ -87,6 +117,9 @@ public class Chessman : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Destroys all existing move plates in the scene.
+    /// </summary>
     public void DestroyMovePlates()
     {
         GameObject[] movePlates = GameObject.FindGameObjectsWithTag("MovePlate");
@@ -96,6 +129,9 @@ public class Chessman : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initiates the creation of move plates based on the type of chess piece.
+    /// </summary>
     public void InitiateMovePlates()
     {
         switch (this.name)
@@ -149,6 +185,11 @@ public class Chessman : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creates a line of move plates along a specified direction until a blocking piece is encountered.
+    /// </summary>
+    /// <param name="xIncrement">The increment value for the x-coordinate.</param>
+    /// <param name="yIncrement">The increment value for the y-coordinate.</param>
     public void LineMovePlate(int xIncrement, int yIncrement)
     {
         Game sc = controller.GetComponent<Game>();
@@ -167,9 +208,11 @@ public class Chessman : MonoBehaviour
         {
             MovePlateAttackSpawn(x, y);
         }
-
     }
 
+    /// <summary>
+    /// Creates L-shaped move plates around the chess piece.
+    /// </summary>
     public void LMovePlate()
     {
         PointMovePlate(xBoard + 1, yBoard + 2);
@@ -183,6 +226,9 @@ public class Chessman : MonoBehaviour
         PointMovePlate(xBoard - 2, yBoard - 1);
     }
 
+    /// <summary>
+    /// Creates move plates in the surrounding positions of the chess piece.
+    /// </summary>
     public void SurroundMovePlate()
     {
         PointMovePlate(xBoard, yBoard + 1);
@@ -195,6 +241,11 @@ public class Chessman : MonoBehaviour
         PointMovePlate(xBoard + 1, yBoard + 1);
     }
 
+    /// <summary>
+    /// Creates a move plate at the specified position.
+    /// </summary>
+    /// <param name="x">The x-coordinate of the move plate.</param>
+    /// <param name="y">The y-coordinate of the move plate.</param>
     public void PointMovePlate(int x, int y)
     {
         Game sc = controller.GetComponent<Game>();
@@ -213,6 +264,11 @@ public class Chessman : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creates move plates for the pawn at the specified positions.
+    /// </summary>
+    /// <param name="x">The x-coordinate of the pawn.</param>
+    /// <param name="y">The y-coordinate of the pawn.</param>
     public void PawnMovePlate(int x, int y)
     {
         Game sc = controller.GetComponent<Game>();
@@ -238,6 +294,11 @@ public class Chessman : MonoBehaviour
   
     }
 
+    /// <summary>
+    /// Spawns a move plate at the specified position.
+    /// </summary>
+    /// <param name="matrixX">The x-coordinate of the move plate on the matrix.</param>
+    /// <param name="matrixY">The y-coordinate of the move plate on the matrix.</param>
     public void MovePlateSpawn(int matrixX, int matrixY)
     {
         float x = matrixX;
@@ -256,6 +317,11 @@ public class Chessman : MonoBehaviour
         mpScript.SetCoords(matrixX, matrixY);
     }
 
+    /// <summary>
+    /// Spawns an attack move plate at the specified position.
+    /// </summary>
+    /// <param name="matrixX">The x-coordinate of the move plate on the matrix.</param>
+    /// <param name="matrixY">The y-coordinate of the move plate on the matrix.</param>
     public void MovePlateAttackSpawn(int matrixX, int matrixY)
     {
         float x = matrixX;

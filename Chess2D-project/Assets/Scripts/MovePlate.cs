@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,9 @@ public class MovePlate : MonoBehaviour
 
     public bool attack = false;
 
+    /// <summary>
+    /// Sets the color of the move plate to red if it represents an attack move.
+    /// </summary>
     public void Start()
     {
         if (attack)
@@ -21,6 +25,9 @@ public class MovePlate : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the event when the move plate is clicked.
+    /// </summary>
     public void OnMouseUp()
     {
         controller = GameObject.FindGameObjectWithTag("GameController");
@@ -50,17 +57,30 @@ public class MovePlate : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Sets the coordinates of the move plate in the chessboard matrix.
+    /// </summary>
+    /// <param name="x">The x-coordinate in the matrix.</param>
+    /// <param name="y">The y-coordinate in the matrix.</param>
     public void SetCoords(int x, int y)
     {
         matrixX = x;
         matrixY = y;
     }
 
+    /// <summary>
+    /// Sets the reference to the chessman associated with the move plate.
+    /// </summary>
+    /// <param name="obj">The reference to the chessman GameObject.</param>
     public void SetReference(GameObject obj)
     {
         reference = obj;
     }
 
+    /// <summary>
+    /// Retrieves the reference to the chessman associated with the move plate.
+    /// </summary>
+    /// <returns>The reference to the chessman GameObject.</returns>
     public GameObject GetReference()
     {
         return reference;
