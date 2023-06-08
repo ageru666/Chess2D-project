@@ -16,6 +16,9 @@ public class Chessman : MonoBehaviour
     private int xBoard = -1;
     private int yBoard = -1;
 
+    public bool firstMove = true;
+
+
     private string player;
 
     //references for all sprites
@@ -39,7 +42,7 @@ public class Chessman : MonoBehaviour
             case "black_bishop": this.GetComponent<SpriteRenderer>().sprite = black_bishop; player = "black"; break;
             case "black_king": this.GetComponent<SpriteRenderer>().sprite = black_king; player = "black"; break;
             case "black_rook": this.GetComponent<SpriteRenderer>().sprite = black_rook; player = "black"; break;
-            case "black_pawn": this.GetComponent<SpriteRenderer>().sprite = black_pawn; player = "black"; break;
+            case "black_pawn": this.GetComponent<SpriteRenderer>().sprite = black_pawn;player = "black"; break;
 
             case "white_queen": this.GetComponent<SpriteRenderer>().sprite = white_queen; player = "white"; break;
             case "white_knight": this.GetComponent<SpriteRenderer>().sprite = white_knight; player = "white"; break;
@@ -275,12 +278,21 @@ public class Chessman : MonoBehaviour
 
         if (sc.PositionOnBoard(x, y))
         {
-            if(sc.GetPosition(x, y) == null)
+            if (sc.GetPosition(x, y) == null)
             {
                 MovePlateSpawn(x, y);
+
+                if (firstMove)
+                {
+                    int doubleMoveY = (player == "black") ? y - 1 : y + 1;
+                    if (sc.GetPosition(x, doubleMoveY) == null)
+                    {
+                        MovePlateSpawn(x, doubleMoveY);
+                    }
+                }
             }
 
-            if(sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
             {
                 MovePlateAttackSpawn(x + 1, y);
             }
@@ -291,8 +303,8 @@ public class Chessman : MonoBehaviour
                 MovePlateAttackSpawn(x - 1, y);
             }
         }
-  
     }
+
 
     /// <summary>
     /// Spawns a move plate at the specified position.

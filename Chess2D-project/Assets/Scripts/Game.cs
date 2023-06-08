@@ -18,6 +18,7 @@ public class Game : MonoBehaviour
 
     private bool gameOver = false;
 
+
     /// <summary>
     /// Starts the game by creating and positioning all chess pieces.
     /// </summary>
